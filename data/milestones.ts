@@ -7,6 +7,11 @@ export interface BuildingBlockMilestone {
   impact: string
 }
 
+export interface CategoryGroup {
+  name: string
+  categories: string[]
+}
+
 export const buildingBlockMilestones: BuildingBlockMilestone[] = [
   {
     id: "perl",
@@ -432,4 +437,47 @@ export const buildingBlockMilestones: BuildingBlockMilestone[] = [
 ]
 
 export const buildingBlockCategories = Array.from(new Set(buildingBlockMilestones.map((m) => m.category))).sort()
+
+export const categoryGroups: CategoryGroup[] = [
+  {
+    name: "Backend Technologies",
+    categories: ["Backend", "Database", "API", "DevOps", "Cloud Storage"],
+  },
+  {
+    name: "Frontend Technologies",
+    categories: ["Frontend", "Frontend Framework", "Web Technology"],
+  },
+  {
+    name: "Web Infrastructure",
+    categories: ["Protocol", "Infrastructure", "Web Architecture"],
+  },
+  {
+    name: "Content Management",
+    categories: ["CMS", "DXP/CMS"],
+  },
+  {
+    name: "Programming Languages",
+    categories: ["Programming Language"],
+  },
+  {
+    name: "Mobile & Hardware",
+    categories: ["Mobile", "Hardware"],
+  },
+  {
+    name: "Data & Analytics",
+    categories: ["Big Data", "Analytics", "Search"],
+  },
+  {
+    name: "E-commerce & Business",
+    categories: ["E-commerce", "Service Fees"],
+  },
+  {
+    name: "Emerging Technologies",
+    categories: ["AI/ML", "AR", "Cryptocurrency", "Decentralized"],
+  },
+  {
+    name: "Development Tools",
+    categories: ["Build Tools", "State Management"],
+  },
+]
 

@@ -1,11 +1,8 @@
 "use client"
-
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { ChevronDown, ChevronUp, X } from "lucide-react"
 import Dropdown from "./Dropdown"
 import { Badge } from "@/components/ui/badge"
+import { X } from "lucide-react"
 import type { CategoryGroup } from "../../data/milestones"
 
 interface FilterBarProps {
@@ -21,16 +18,19 @@ export default function FilterBar({
   onToggleCategory,
   onClearAll,
 }: FilterBarProps) {
-  const [openGroups, setOpenGroups] = useState<string[]>([])
+  // const [openGroups, setOpenGroups] = useState<string[]>([])
 
-  const toggleGroup = (groupName: string) => {
-    setOpenGroups((prev) =>
-      prev.includes(groupName) ? prev.filter((name) => name !== groupName) : [...prev, groupName],
-    )
-  }
+  // const toggleGroup = (groupName: string) => {
+  //   setOpenGroups((prev) =>
+  //     prev.includes(groupName) ? prev.filter((name) => name !== groupName) : [...prev, groupName],
+  //   )
+  // }
 
   return (
     <div className="mb-6 bg-gray-800 p-4 rounded-lg shadow-lg">
+      <h2 className="text-xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+Filter by Tags      
+</h2>
       {selectedCategories.length > 0 && (
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
@@ -67,44 +67,23 @@ export default function FilterBar({
           onClearAll={onClearAll}
         />
       </div>
-      <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {categoryGroups.map((group) => (
-          <Collapsible
-            key={group.name}
-            open={openGroups.includes(group.name)}
-            onOpenChange={() => toggleGroup(group.name)}
-          >
-            <CollapsibleTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full justify-between bg-gray-700 text-white hover:bg-gray-600 border-gray-600"
-              >
-                {group.name}
-                {openGroups.includes(group.name) ? (
-                  <ChevronUp className="h-4 w-4" />
-                ) : (
-                  <ChevronDown className="h-4 w-4" />
-                )}
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
-              {group.categories.map((category) => (
-                <Button
-                  key={category}
-                  onClick={() => onToggleCategory(category)}
-                  variant={selectedCategories.includes(category) ? "default" : "outline"}
-                  className={`w-full text-sm ${
-                    selectedCategories.includes(category)
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white border-gray-600"
-                  }`}
-                >
-                  {category}
-                </Button>
-              ))}
-            </CollapsibleContent>
-          </Collapsible>
-        ))}
+      <div className="hidden md:flex flex-wrap gap-2">
+        {categoryGroups.flatMap((group) =>
+          group.categories.map((category) => (
+            <Button
+              key={category}
+              onClick={() => onToggleCategory(category)}
+              variant={selectedCategories.includes(category) ? "default" : "outline"}
+              className={`text-sm ${
+                selectedCategories.includes(category)
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white border-gray-600"
+              }`}
+            >
+              {category}
+            </Button>
+          )),
+        )}
       </div>
     </div>
   )
