@@ -1,12 +1,10 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback } from "react"
 import type { BuildingBlockMilestone } from "../../data/milestones"
 import MilestoneCard from "./MilestoneCard"
 import InfiniteScroll from "./InfiniteScroll"
 import { motion, AnimatePresence } from "framer-motion"
-import { db } from "../../lib/firebase"
-import { collection, query, where, getDocs } from "firebase/firestore"
 
 interface TimelineProps {
   milestones: BuildingBlockMilestone[]

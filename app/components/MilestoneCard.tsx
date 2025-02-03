@@ -50,17 +50,19 @@ export default function MilestoneCard({ milestone, isLeft, onCategoryClick }: Mi
                   <CardTitle className="text-lg md:text-xl">{milestone.title}</CardTitle>
                 </div>
                 <div className="flex flex-wrap items-center mt-1 gap-2">
-                  <Badge
-                    key={milestone.category}
-                    variant="secondary"
-                    className="text-xs md:text-sm bg-black text-white cursor-pointer hover:bg-gray-700 transition-colors"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleCategoryClick(milestone.category)
-                    }}
-                  >
-                    {milestone.category}
-                  </Badge>
+                  {milestone.categories.map((category) => (
+                    <Badge
+                      key={category}
+                      variant="secondary"
+                      className="text-xs md:text-sm bg-black text-white cursor-pointer hover:bg-gray-700 transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleCategoryClick(category)
+                      }}
+                    >
+                      {category}
+                    </Badge>
+                  ))}
                 </div>
               </div>
             </div>

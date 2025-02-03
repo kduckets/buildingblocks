@@ -5,7 +5,7 @@ import Timeline from "./components/Timeline"
 import FilterBar from "./components/FilterBar"
 import ScrollToTopButton from "./components/ScrollToTopButton"
 import SearchBox from "./components/SearchBox"
-import { buildingBlockMilestones, buildingBlockCategories } from "../data/milestones"
+import { buildingBlockMilestones, categoryGroups } from "../data/milestones"
 
 export default function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -33,7 +33,8 @@ export default function Home() {
   }, [])
 
   const filteredBuildingBlockMilestones = buildingBlockMilestones.filter((milestone) => {
-    const matchesCategories = selectedCategories.length === 0 || selectedCategories.includes(milestone.category)
+    const matchesCategories =
+      selectedCategories.length === 0 || selectedCategories.some((cat) => milestone.categories.includes(cat))
 
     const matchesSearch =
       searchQuery === "" ||
@@ -47,14 +48,14 @@ export default function Home() {
     <main className="min-h-screen bg-gray-900 text-white font-mono">
       <div className="container mx-auto px-4 py-8 md:py-12">
         <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 font-mono">
-          Building Blocks of the Internet
+          Internet Building Blocks
         </h1>
         <p className="text-center text-gray-300 mb-8 md:mb-12 max-w-2xl mx-auto text-sm md:text-base">
           Explore the technological evolution of the internet through its fundamental building blocks.
         </p>
         <SearchBox onSearch={handleSearch} />
         <FilterBar
-          categoryGroups={[{ name: "Categories", categories: buildingBlockCategories }]}
+          categoryGroups={categoryGroups}
           selectedCategories={selectedCategories}
           onToggleCategory={handleToggleCategory}
           onClearAll={handleClearAll}
