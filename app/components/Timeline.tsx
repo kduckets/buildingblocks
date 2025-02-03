@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import type { Milestone } from "../../data/milestones"
+import type { BuildingBlockMilestone } from "../../data/milestones"
 import MilestoneCard from "./MilestoneCard"
 import InfiniteScroll from "./InfiniteScroll"
 import { motion, AnimatePresence } from "framer-motion"
@@ -9,14 +9,14 @@ import { db } from "../../lib/firebase"
 import { collection, query, where, getDocs } from "firebase/firestore"
 
 interface TimelineProps {
-  milestones: Milestone[]
+  milestones: BuildingBlockMilestone[]
   filteredCategories: string[]
   onCategoryClick: (category: string) => void
 }
 
 const ITEMS_PER_PAGE = 50
 
-function groupMilestonesByDecade(milestones: Milestone[]): [string, Milestone[]][] {
+function groupMilestonesByDecade(milestones: BuildingBlockMilestone[]): [string, BuildingBlockMilestone[]][] {
   const grouped = milestones.reduce(
     (acc, milestone) => {
       const decade = Math.floor(milestone.year / 10) * 10
@@ -26,7 +26,7 @@ function groupMilestonesByDecade(milestones: Milestone[]): [string, Milestone[]]
       acc[decade].push(milestone)
       return acc
     },
-    {} as Record<number, Milestone[]>,
+    {} as Record<number, BuildingBlockMilestone[]>,
   )
 
   return Object.entries(grouped)
@@ -99,7 +99,6 @@ export default function Timeline({ milestones, onCategoryClick }: TimelineProps)
                   <MilestoneCard
                     milestone={milestone}
                     isLeft={index % 2 === 0}
-                    commentCount={commentCounts[milestone.id] || 0}
                     onCategoryClick={onCategoryClick}
                   />
                 </motion.div>
