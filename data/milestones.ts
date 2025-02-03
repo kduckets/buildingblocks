@@ -448,20 +448,8 @@ export const categoryGroups: CategoryGroup[] = [
     categories: ["Frontend", "Frontend Framework", "Web Technology"],
   },
   {
-    name: "Web Infrastructure",
-    categories: ["Protocol", "Infrastructure", "Web Architecture"],
-  },
-  {
     name: "Content Management",
     categories: ["CMS", "DXP"],
-  },
-  {
-    name: "Programming Languages",
-    categories: ["Programming Language"],
-  },
-  {
-    name: "Mobile & Hardware",
-    categories: ["Mobile", "Hardware", "IoT"],
   },
   {
     name: "Data & Analytics",
@@ -474,10 +462,6 @@ export const categoryGroups: CategoryGroup[] = [
   {
     name: "Emerging Technologies",
     categories: ["AI/ML", "AR", "Cryptocurrency", "Decentralized"],
-  },
-  {
-    name: "Development Tools",
-    categories: ["Build Tools", "State Management"],
-  },
+  }
 ]
 
