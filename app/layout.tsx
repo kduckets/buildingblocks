@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "wtf is the internet?",
-  description: "Retrace our steps to learn how we got here",
+  title: "Building Blocks of the Internet",
+  description: "The tools we used to build the internet.",
 };
 
 export default function RootLayout({

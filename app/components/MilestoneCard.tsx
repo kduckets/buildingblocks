@@ -1,24 +1,29 @@
 "use client"
 
-import { useState } from "react"
-import type { Milestone } from "../../data/milestones"
+import { useState, useCallback } from "react"
+import type { BuildingBlockMilestone } from "../../data/milestones"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import MilestoneDetails from "./MilestoneDetails"
-import Comments from "./Comments"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, ChevronUp, MessageCircle } from "lucide-react"
+import { ChevronDown, ChevronUp } from "lucide-react"
 
 interface MilestoneCardProps {
-  milestone: Milestone
+  milestone: BuildingBlockMilestone
   isLeft: boolean
-  commentCount: number
   onCategoryClick: (category: string) => void
 }
 
-export default function MilestoneCard({ milestone, isLeft, commentCount, onCategoryClick }: MilestoneCardProps) {
+export default function MilestoneCard({ milestone, isLeft, onCategoryClick }: MilestoneCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const handleCategoryClick = useCallback(
+    (category: string) => {
+      onCategoryClick(category)
+    },
+    [onCategoryClick],
+  )
 
   return (
     <div className={`flex ${isLeft ? "justify-start" : "justify-end"} mb-6 md:mb-0`}>
@@ -43,34 +48,19 @@ export default function MilestoneCard({ milestone, isLeft, commentCount, onCateg
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg md:text-xl">{milestone.title}</CardTitle>
-                  {commentCount > 0 && (
-                    <Badge
-                      variant="secondary"
-                      className="bg-blue-600 text-white flex items-center gap-1 cursor-pointer hover:bg-blue-700 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        setIsExpanded((prev) => !prev)
-                      }}
-                    >
-                      <MessageCircle size={14} />
-                      {commentCount}
-                    </Badge>
-                  )}
                 </div>
                 <div className="flex flex-wrap items-center mt-1 gap-2">
-                  {milestone.categories.map((category) => (
-                    <Badge
-                      key={category}
-                      variant="secondary"
-                      className="text-xs md:text-sm bg-black text-white cursor-pointer hover:bg-gray-700 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        onCategoryClick(category)
-                      }}
-                    >
-                      {category}
-                    </Badge>
-                  ))}
+                  <Badge
+                    key={milestone.category}
+                    variant="secondary"
+                    className="text-xs md:text-sm bg-black text-white cursor-pointer hover:bg-gray-700 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleCategoryClick(milestone.category)
+                    }}
+                  >
+                    {milestone.category}
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -81,7 +71,7 @@ export default function MilestoneCard({ milestone, isLeft, commentCount, onCateg
               onClick={() => setIsExpanded(!isExpanded)}
               className="mt-4 w-full justify-between bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600"
             >
-              {isExpanded ? "Hide Details and Comments" : "Show Details and Comments"}
+              {isExpanded ? "Hide Details" : "Show Details"}
               {isExpanded ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
             </Button>
             <AnimatePresence>
@@ -93,7 +83,6 @@ export default function MilestoneCard({ milestone, isLeft, commentCount, onCateg
                   transition={{ duration: 0.3 }}
                 >
                   <MilestoneDetails milestone={milestone} />
-                  <Comments milestoneId={milestone.id} />
                 </motion.div>
               )}
             </AnimatePresence>

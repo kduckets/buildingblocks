@@ -1,15 +1,15 @@
-import type { Milestone } from "../../data/milestones"
+import type { BuildingBlockMilestone } from "../../data/milestones"
 
 interface MilestoneDetailsProps {
-  milestone: Milestone
+  milestone: BuildingBlockMilestone
 }
 
 export default function MilestoneDetails({ milestone }: MilestoneDetailsProps) {
   return (
     <div className="mt-4 space-y-4">
       <div>
-        <h3 className="font-bold text-blue-600">Profit Model</h3>
-        <p>{milestone.profitModel}</p>
+        <h3 className="font-bold text-blue-600">Category</h3>
+        <p>{milestone.category}</p>
       </div>
       <div>
         <h3 className="font-bold text-purple-600">Impact</h3>
