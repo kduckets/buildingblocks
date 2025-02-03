@@ -39,7 +39,7 @@ function groupMilestonesByDecade(milestones: BuildingBlockMilestone[]): [string,
 
 export default function Timeline({ milestones, onCategoryClick }: TimelineProps) {
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE)
-  const [commentCounts, setCommentCounts] = useState<Record<string, number>>({})
+  // const [commentCounts, setCommentCounts] = useState<Record<string, number>>({})
 
   // Sort all milestones chronologically before grouping
   const sortedMilestones = [...milestones].sort((a, b) => a.year - b.year)
@@ -49,21 +49,6 @@ export default function Timeline({ milestones, onCategoryClick }: TimelineProps)
     setDisplayCount((prevCount) => prevCount + ITEMS_PER_PAGE)
   }, [])
 
-  useEffect(() => {
-    const fetchCommentCounts = async () => {
-      const newCounts: Record<string, number> = {}
-      const fetchPromises = sortedMilestones.slice(0, displayCount).map(async (milestone) => {
-        const q = query(collection(db, "comments"), where("milestoneId", "==", milestone.id))
-        const querySnapshot = await getDocs(q)
-        newCounts[milestone.id] = querySnapshot.size
-      })
-
-      await Promise.all(fetchPromises)
-      setCommentCounts(newCounts)
-    }
-
-    fetchCommentCounts()
-  }, [sortedMilestones, displayCount])
 
   return (
     <div className="relative">
