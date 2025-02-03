@@ -28,7 +28,7 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
         <div className="relative flex-grow">
           <Input
             type="text"
-            placeholder="Search milestones..."
+            placeholder="Search..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="pl-10 pr-4 py-2 w-full bg-gray-800 text-white border-gray-700 focus:border-blue-500 rounded-l-md"

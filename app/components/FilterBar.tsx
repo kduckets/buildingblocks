@@ -33,7 +33,7 @@ export default function FilterBar({
   return (
     <div className="mb-6 bg-gray-800 p-4 rounded-lg shadow-lg">
       <h2 className="text-xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-        Filter Building Blocks
+        Filters
       </h2>
       {selectedCategories.length > 0 && (
         <div className="mb-4">
