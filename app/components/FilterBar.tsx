@@ -1,8 +1,18 @@
 "use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import Dropdown from "./Dropdown"
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import type { CategoryGroup } from "../../data/milestones"
 
 interface FilterBarProps {
@@ -18,19 +28,13 @@ export default function FilterBar({
   onToggleCategory,
   onClearAll,
 }: FilterBarProps) {
-  // const [openGroups, setOpenGroups] = useState<string[]>([])
-
-  // const toggleGroup = (groupName: string) => {
-  //   setOpenGroups((prev) =>
-  //     prev.includes(groupName) ? prev.filter((name) => name !== groupName) : [...prev, groupName],
-  //   )
-  // }
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
   return (
     <div className="mb-6 bg-gray-800 p-4 rounded-lg shadow-lg">
       <h2 className="text-xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-Filter by Tags      
-</h2>
+        Filter Building Blocks
+      </h2>
       {selectedCategories.length > 0 && (
         <div className="mb-4">
           <div className="flex justify-between items-center mb-2">
@@ -59,31 +63,40 @@ Filter by Tags
           </div>
         </div>
       )}
-      <div className="md:hidden">
-        <Dropdown
-          categoryGroups={categoryGroups}
-          selectedCategories={selectedCategories}
-          onToggle={onToggleCategory}
-          onClearAll={onClearAll}
-        />
-      </div>
-      <div className="hidden md:flex flex-wrap gap-2">
-        {categoryGroups.flatMap((group) =>
-          group.categories.map((category) => (
-            <Button
-              key={category}
-              onClick={() => onToggleCategory(category)}
-              variant={selectedCategories.includes(category) ? "default" : "outline"}
-              className={`text-sm ${
-                selectedCategories.includes(category)
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white border-gray-600"
-              }`}
-            >
-              {category}
-            </Button>
-          )),
-        )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {categoryGroups.map((group) => (
+          <Select
+            key={group.name}
+            onValueChange={(value) => {
+              onToggleCategory(value)
+              setOpenDropdown(null)
+            }}
+            value=""
+            onOpenChange={(open) => {
+              if (open) {
+                setOpenDropdown(group.name)
+              } else if (openDropdown === group.name) {
+                setOpenDropdown(null)
+              }
+            }}
+            open={openDropdown === group.name}
+          >
+            <SelectTrigger className="w-full bg-gray-700 text-white border-gray-600">
+              <SelectValue placeholder={group.name} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>{group.name}</SelectLabel>
+                {group.categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                    {selectedCategories.includes(category) && " ✓"}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        ))}
       </div>
     </div>
   )
