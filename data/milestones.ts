@@ -434,6 +434,26 @@ export const buildingBlockMilestones: BuildingBlockMilestone[] = [
     impact:
       "Accelerated the shift towards composable architecture in enterprise content management, offering scalability and flexibility for digital experiences.",
   },
+  {
+    id: "adobe-dam",
+    year: 2010,
+    title: "Adobe Digital Asset Management",
+    description:
+      "Adobe introduces its Digital Asset Management (DAM) solution as part of the Adobe Experience Manager suite.",
+    categories: ["DAM", "Web Technology"],
+    impact:
+      "Provided enterprise-level digital asset management integrated with a broader digital experience platform, streamlining content operations for large organizations.",
+  },
+  {
+    id: "sitecore-content-hub",
+    year: 2018,
+    title: "Sitecore Content Hub",
+    description:
+      "Sitecore launches Content Hub, a comprehensive content management platform including DAM, CMP, and MRM capabilities.",
+    categories: ["DAM", "Web Technology"],
+    impact:
+      "Unified content operations and asset management, enabling organizations to manage, plan, create, and deliver content across multiple channels more efficiently.",
+  },
 ]
 
 export const buildingBlockCategories = Array.from(new Set(buildingBlockMilestones.flatMap((m) => m.categories))).sort()
@@ -449,7 +469,7 @@ export const categoryGroups: CategoryGroup[] = [
   },
   {
     name: "Content Management",
-    categories: ["CMS", "DXP"],
+    categories: ["CMS", "DXP", "DAM"],
   },
   {
     name: "Data & Analytics",
